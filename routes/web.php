@@ -16,7 +16,7 @@ use Illuminate\Support\Facades\Artisan;
 Route::get('/', function () {
     return view('welcome');
 });
-Route::get('/', function () {
+Route::get('/setup', function () {
     Artisan::call('storage:link');
     Artisan::call('migrate');
     Artisan::call('db:seed');
