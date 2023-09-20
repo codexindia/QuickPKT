@@ -11,7 +11,10 @@ use Illuminate\Support\Facades\Http;
 
 class AuthManager extends Controller
 {
-    
+    private $logevent = null;
+    public function __construct(){
+        $this->logevent = activity()->event('authentication');
+    }
     public function login_or_signup(Request $request)
     {
         
@@ -24,7 +27,7 @@ class AuthManager extends Controller
             if ($checkphone) {
 
                 $token = $checkphone->createToken('auth_token')->plainTextToken;
-                activity()->causedBy($checkphone)->log('New Token Created (Login)');
+                activity()->event('authentication')->log('Token Generated Successfully (Login) '.$request->phone);
                 return response()->json([
                     'status' => true,
                     'message' => 'OTP Verified  Successfully (Login)',
@@ -37,7 +40,7 @@ class AuthManager extends Controller
 
 
                 $token = $newuser->createToken('auth_token')->plainTextToken;
-                activity()->causedBy($newuser)->log('New Token Created (new user)');
+                activity()->event('authentication')->log('New Token Created (new user): ' . $request->phone);
                 return response()->json([
                     'status' => true,
                     'message' => 'OTP Verified  Successfully (new user)',
@@ -58,13 +61,13 @@ class AuthManager extends Controller
             ->where('otp', $otp)->latest()->first();
         $now = Carbon::now();
         if (!$checkotp) {
-            activity()->log('Trying To Verify OTP Invalid OTP '.$phone);
+            $this->logevent->log('Trying To Verify OTP Invalid OTP '.$phone);
             return 0;
         } elseif ($checkotp && $now->isAfter($checkotp->expire_at)) {
-            activity()->log('Trying To Verify OTP Expired OTP '.$phone);
+            $this->logevent->log('Trying To Verify OTP Expired OTP '.$phone);
             return 0;
         } else {
-            activity()->log('Success OTP Verified '.$phone);
+            $this->logevent->log('Success OTP Verified '.$phone);
             $device = 'Auth_Token';
             VerficationCodes::where('phone', $phone)->delete();
             return 1;
@@ -75,7 +78,7 @@ class AuthManager extends Controller
         $request->validate([
             'phone' => 'required|numeric|digits:10',
         ]);
-        activity()->log('Trying To Send OTP '.$request->phone);
+        $this->logevent->log('Trying To Send OTP '.$request->phone);
         if ($this->genarateotp($request->phone)) {
             return response()->json([
                 'status' => true,
@@ -94,7 +97,7 @@ class AuthManager extends Controller
             'phone' => 'required|numeric|digits:10',
         ]);
         $phone = $request->phone;
-        activity()->log('Trying To Resend OTP '.$request->phone);
+        $this->logevent->log('Trying To Resend OTP '.$request->phone);
         if ($this->genarateotp($phone)) {
             return response()->json([
                 'status' => true,

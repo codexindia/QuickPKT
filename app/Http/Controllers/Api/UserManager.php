@@ -15,6 +15,7 @@ class UserManager extends Controller
 
         $this->middleware(function ($request, $next) {
             CauserResolver::setCauser($request->user());
+           
             $this->user_id = $request->user()->id;
             return $next($request);
         });
