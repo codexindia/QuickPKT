@@ -17,7 +17,7 @@ use Illuminate\Support\Facades\Route;
 Route::middleware('auth:sanctum')->get('/users', function (Request $request) {
     return $request->user();
 });
-Route::controller('AuthManager')->prefix('auth')->group(function () {
+Route::controller('AuthManager')->middleware('throttle:api')->prefix('auth')->group(function () {
     Route::post('/login_or_signup', 'login_or_signup');
     Route::post('send_otp', 'SendOTP');
     Route::post('resend_otp', 'SendOTP');
