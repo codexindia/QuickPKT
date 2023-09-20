@@ -27,7 +27,7 @@ class AuthManager extends Controller
             if ($checkphone) {
 
                 $token = $checkphone->createToken('auth_token')->plainTextToken;
-                activity()->event('authentication')->log('Token Generated Successfully (Login) '.$request->phone);
+                activity()->event('authentication')->log('Token Generated Successfully (Login) '.$request->phone.' IP: '.$request->ip());
                 return response()->json([
                     'status' => true,
                     'message' => 'OTP Verified  Successfully (Login)',
@@ -40,7 +40,7 @@ class AuthManager extends Controller
 
 
                 $token = $newuser->createToken('auth_token')->plainTextToken;
-                activity()->event('authentication')->log('New Token Created (new user): ' . $request->phone);
+                activity()->event('authentication')->log('New Token Created (new user): ' . $request->phone.' IP: '.$request->ip());
                 return response()->json([
                     'status' => true,
                     'message' => 'OTP Verified  Successfully (new user)',
@@ -78,7 +78,7 @@ class AuthManager extends Controller
         $request->validate([
             'phone' => 'required|numeric|digits:10',
         ]);
-        $this->logevent->log('Trying To Send OTP '.$request->phone);
+        $this->logevent->log('Trying To Send OTP '.$request->phone.' IP: '.$request->ip());
         if ($this->genarateotp($request->phone)) {
             return response()->json([
                 'status' => true,
@@ -97,7 +97,7 @@ class AuthManager extends Controller
             'phone' => 'required|numeric|digits:10',
         ]);
         $phone = $request->phone;
-        $this->logevent->log('Trying To Resend OTP '.$request->phone);
+        $this->logevent->log('Trying To Resend OTP '.$request->phone.' IP: '.$request->ip());
         if ($this->genarateotp($phone)) {
             return response()->json([
                 'status' => true,
