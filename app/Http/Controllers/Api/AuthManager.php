@@ -31,9 +31,7 @@ class AuthManager extends Controller
                 $newuser = User::create([
                     'mobile_number' => $request->phone,
                 ]);
-                // $newuser->UserExtra()->create([
-                //     'user_id' => $newuser->id,
-                // ]);
+                
 
                 $token = $newuser->createToken('auth_token')->plainTextToken;
                 return response()->json([
@@ -83,8 +81,10 @@ class AuthManager extends Controller
     }
     public function resend(Request $request)
     {
-
-        $phone = $request->user()->phone;
+        $request->validate([
+            'phone' => 'required|numeric|digits:10',
+        ]);
+        $phone = $request->phone;
 
         if ($this->genarateotp($phone)) {
             return response()->json([
