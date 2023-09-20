@@ -20,5 +20,5 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 Route::controller('AuthManager')->prefix('auth')->group(function () {
     Route::post('/login_or_signup', 'login_or_signup');
     Route::post('send_otp', 'SendOTP');
-    Route::post('resend', 'SendOTP');
+    Route::post('resend_otp', 'SendOTP');
 });
