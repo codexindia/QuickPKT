@@ -31,9 +31,10 @@ class AuthManager extends Controller
                 $newuser = User::create([
                     'mobile_number' => $request->phone,
                 ]);
-                
+
 
                 $token = $newuser->createToken('auth_token')->plainTextToken;
+              
                 return response()->json([
                     'status' => true,
                     'message' => 'OTP Verified  Successfully (new user)',
@@ -58,7 +59,7 @@ class AuthManager extends Controller
             return 0;
         } else {
             $device = 'Auth_Token';
-               VerficationCodes::where('phone', $phone)->delete();
+            VerficationCodes::where('phone', $phone)->delete();
             return 1;
         }
     }
@@ -67,17 +68,17 @@ class AuthManager extends Controller
         $request->validate([
             'phone' => 'required|numeric|digits:10',
         ]);
-       if($this->genarateotp($request->phone)){
-        return response()->json([
-            'status' => true,
-            'message' => 'OTP send successfully',
-        ]);
-    }else{
-        return response()->json([
-            'status' => false,
-            'message' => 'OTP Send UnsuccessFully',
-        ]);
-    }
+        if ($this->genarateotp($request->phone)) {
+            return response()->json([
+                'status' => true,
+                'message' => 'OTP send successfully',
+            ]);
+        } else {
+            return response()->json([
+                'status' => false,
+                'message' => 'OTP Send UnsuccessFully Or Limit Exeeded Try Again Later',
+            ]);
+        }
     }
     public function resend(Request $request)
     {
@@ -100,9 +101,12 @@ class AuthManager extends Controller
     }
     private function genarateotp($number)
     {
-
+       
         $checkotp = VerficationCodes::where('phone', $number)->latest()->first();
         $now = Carbon::now();
+        if ($checkotp->count() > 10) {
+            return false;
+        }
         if ($checkotp && $now->isBefore($checkotp->expire_at)) {
             $otp = $checkotp->otp;
         } else {
@@ -113,9 +117,6 @@ class AuthManager extends Controller
                 'expire_at' => Carbon::now()->addMinute(10)
             ]);
         }
-
-
-
         try {
             $response = Http::withHeaders([
                 'authorization' => env('FAST2SMS'),
@@ -130,13 +131,11 @@ class AuthManager extends Controller
                 "numbers" => $number,
             ]);
             $decode = json_decode($response);
-            if($decode->return)
-            {
+            if ($decode->return) {
                 return true;
-            }else{
+            } else {
                 return false;
             }
-           
         } catch (\Exception $e) {
             return $e->getMessage();
         }
