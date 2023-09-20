@@ -41,7 +41,7 @@ class RouteServiceProvider extends ServiceProvider
         RateLimiter::for('api', function (Request $request) {
             return Limit::perMinute(10)->by(optional($request->user())->id ?: $request->ip())->response(function () {
                 return response([
-                    'message' => 'You have reached your access limit. Please try after 1 minute.',
+                    'message' => 'Too many requests. Try again after 1 min.',
                     'status' => false,
                     'limit_exceeded' => true, 
                     ], 429);
