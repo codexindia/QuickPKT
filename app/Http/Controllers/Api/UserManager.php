@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Api;
 use App\Http\Controllers\Controller;
 use App\Models\User;
 use Illuminate\Http\Request;
+use Spatie\Activitylog\Facades\CauserResolver;
 
 class UserManager extends Controller
 {
@@ -13,6 +14,7 @@ class UserManager extends Controller
     {
 
         $this->middleware(function ($request, $next) {
+            CauserResolver::setCauser($request->user());
             $this->user_id = $request->user()->id;
             return $next($request);
         });
