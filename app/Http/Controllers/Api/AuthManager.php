@@ -103,7 +103,7 @@ class AuthManager extends Controller
     private function genarateotp($number)
     {
         $otpmodel = VerficationCodes::where('phone', $number);
-
+       
         if ($otpmodel->count() > 10) {
             return false;
         }
