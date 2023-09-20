@@ -45,7 +45,7 @@ class AuthManager extends Controller
         } else {
             return response()->json([
                 'status' => false,
-                'message' => 'Your OTP is Invalid'
+                'message' => 'Your OTP is invalid'
             ]);
         }
     }
