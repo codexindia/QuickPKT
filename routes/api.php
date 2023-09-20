@@ -21,10 +21,12 @@ Route::controller('AuthManager')->middleware('throttle:api')->prefix('auth')->gr
     Route::post('/login_or_signup', 'login_or_signup');
     Route::post('send_otp', 'SendOTP');
     Route::post('resend_otp', 'SendOTP');
+    Route::post('logout', 'logout')->middleware('auth:sanctum');
 });
 Route::middleware('auth:sanctum')->group(function () {
     Route::controller('UserManager')->prefix('user')->group(function () {
         Route::post('/get_current_user', 'get_current_user');
         Route::post('/update_user', 'update_user');
+       
     });
 });

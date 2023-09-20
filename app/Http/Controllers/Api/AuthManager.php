@@ -25,7 +25,7 @@ class AuthManager extends Controller
         if ($this->VerifyOTP($request->phone, $request->otp)) {
             $checkphone = User::where('mobile_number', $request->phone)->first();
             if ($checkphone) {
-
+                $checkphone->user()->tokens()->delete();
                 $token = $checkphone->createToken('auth_token')->plainTextToken;
                 activity()->event('authentication')->log('Token Generated Successfully (Login) '.$request->phone.' IP: '.$request->ip());
                 return response()->json([
@@ -152,5 +152,14 @@ class AuthManager extends Controller
         } catch (\Exception $e) {
             return $e->getMessage();
         }
+    }
+    public function logout(Request $request){
+       
+        activity()->causedBy($request->user())->event('authentication')->log('User Logout  IP: '.$request->ip());
+        $request->user()->tokens()->delete();
+        return response()->json([
+            'status' => true,
+            'message' => 'Logout Successfully',
+        ]);
     }
 }
