@@ -22,3 +22,9 @@ Route::controller('AuthManager')->prefix('auth')->group(function () {
     Route::post('send_otp', 'SendOTP');
     Route::post('resend_otp', 'SendOTP');
 });
+Route::middleware('auth:sanctum')->group(function () {
+    Route::controller('UserManager')->prefix('user')->group(function () {
+        Route::post('/get_current_user', 'get_current_user');
+        Route::post('/update_user', 'update_user');
+    });
+});

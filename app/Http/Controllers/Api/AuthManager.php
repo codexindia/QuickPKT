@@ -13,6 +13,7 @@ class AuthManager extends Controller
 {
     public function login_or_signup(Request $request)
     {
+        
         $request->validate([
             'otp' => 'required|numeric|digits:6',
             'phone' => 'required|numeric'
@@ -34,7 +35,7 @@ class AuthManager extends Controller
 
 
                 $token = $newuser->createToken('auth_token')->plainTextToken;
-              
+
                 return response()->json([
                     'status' => true,
                     'message' => 'OTP Verified  Successfully (new user)',
@@ -44,7 +45,7 @@ class AuthManager extends Controller
         } else {
             return response()->json([
                 'status' => false,
-                'message' => 'Your OTP Is Invalid'
+                'message' => 'Your OTP is Invalid'
             ]);
         }
     }
@@ -101,12 +102,14 @@ class AuthManager extends Controller
     }
     private function genarateotp($number)
     {
-       
-        $checkotp = VerficationCodes::where('phone', $number)->latest()->first();
-        $now = Carbon::now();
-        if ($checkotp->count() > 10) {
+        $otpmodel = VerficationCodes::where('phone', $number);
+
+        if ($otpmodel->count() > 10) {
             return false;
         }
+        $checkotp = $otpmodel->latest()->first();
+        $now = Carbon::now();
+
         if ($checkotp && $now->isBefore($checkotp->expire_at)) {
             $otp = $checkotp->otp;
         } else {
