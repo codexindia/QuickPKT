@@ -40,7 +40,7 @@ class AuthManager extends Controller
 
 
                 $token = $newuser->createToken('auth_token')->plainTextToken;
-                activity()->event('authentication')->log('New Token Created (new user): ' . $request->phone.' IP: '.$request->ip());
+               // activity()->event('authentication')->log('New Token Created (new user): ' . $request->phone.' IP: '.$request->ip());
                 return response()->json([
                     'status' => true,
                     'message' => 'OTP Verified  Successfully (new user)',
@@ -156,7 +156,7 @@ class AuthManager extends Controller
     }
     public function logout(Request $request){
        
-        activity()->causedBy($request->user())->event('authentication')->log('User Logout  IP: '.$request->ip());
+      //  activity()->causedBy($request->user())->event('authentication')->log('User Logout  IP: '.$request->ip());
         $request->user()->tokens()->delete();
         return response()->json([
             'status' => true,
