@@ -12,9 +12,9 @@ use Illuminate\Support\Facades\Http;
 class AuthManager extends Controller
 {
     private $logevent = null;
-    // public function __construct(){
-    //     $this->logevent = activity()->event('authentication');
-    // }
+    public function __construct(){
+        $this->logevent = activity()->event('authentication');
+    }
     public function login_or_signup(Request $request)
     {
         
@@ -25,7 +25,7 @@ class AuthManager extends Controller
         if ($this->VerifyOTP($request->phone, $request->otp)) {
             $checkphone = User::where('mobile_number', $request->phone)->first();
             if ($checkphone) {
-                $checkphone->user()->tokens()->delete();
+                $checkphone->tokens()->delete();
                 $token = $checkphone->createToken('auth_token')->plainTextToken;
                 activity()->event('authentication')->log('Token Generated Successfully (Login) '.$request->phone.' IP: '.$request->ip());
                 return response()->json([
@@ -40,7 +40,7 @@ class AuthManager extends Controller
 
 
                 $token = $newuser->createToken('auth_token')->plainTextToken;
-               // activity()->event('authentication')->log('New Token Created (new user): ' . $request->phone.' IP: '.$request->ip());
+                activity()->event('authentication')->log('New Token Created (new user): ' . $request->phone.' IP: '.$request->ip());
                 return response()->json([
                     'status' => true,
                     'message' => 'OTP Verified  Successfully (new user)',
@@ -61,14 +61,13 @@ class AuthManager extends Controller
             ->where('otp', $otp)->latest()->first();
         $now = Carbon::now();
         if (!$checkotp) {
-         //   $this->logevent->log('Trying To Verify OTP Invalid OTP '.$phone);
+            $this->logevent->log('Trying To Verify OTP Invalid OTP '.$phone);
             return 0;
         } elseif ($checkotp && $now->isAfter($checkotp->expire_at)) {
-         //   activity()->event('authentication')->log('Trying To Verify OTP Expired OTP '.$phone);
-         //   $this->logevent->log('Trying To Verify OTP Expired OTP '.$phone);
+            $this->logevent->log('Trying To Verify OTP Expired OTP '.$phone);
             return 0;
         } else {
-         //   $this->logevent->log('Success OTP Verified '.$phone);
+            $this->logevent->log('Success OTP Verified '.$phone);
             $device = 'Auth_Token';
             VerficationCodes::where('phone', $phone)->delete();
             return 1;
@@ -79,7 +78,7 @@ class AuthManager extends Controller
         $request->validate([
             'phone' => 'required|numeric|digits:10',
         ]);
-    //    $this->logevent->log('Trying To Send OTP '.$request->phone.' IP: '.$request->ip());
+        $this->logevent->log('Trying To Send OTP '.$request->phone.' IP: '.$request->ip());
         if ($this->genarateotp($request->phone)) {
             return response()->json([
                 'status' => true,
@@ -98,7 +97,7 @@ class AuthManager extends Controller
             'phone' => 'required|numeric|digits:10',
         ]);
         $phone = $request->phone;
-    //    $this->logevent->log('Trying To Resend OTP '.$request->phone.' IP: '.$request->ip());
+        $this->logevent->log('Trying To Resend OTP '.$request->phone.' IP: '.$request->ip());
         if ($this->genarateotp($phone)) {
             return response()->json([
                 'status' => true,
@@ -156,7 +155,7 @@ class AuthManager extends Controller
     }
     public function logout(Request $request){
        
-      //  activity()->causedBy($request->user())->event('authentication')->log('User Logout  IP: '.$request->ip());
+        activity()->causedBy($request->user())->event('authentication')->log('User Logout  IP: '.$request->ip());
         $request->user()->tokens()->delete();
         return response()->json([
             'status' => true,
