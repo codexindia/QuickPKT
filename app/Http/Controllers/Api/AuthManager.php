@@ -64,7 +64,7 @@ class AuthManager extends Controller
          //   $this->logevent->log('Trying To Verify OTP Invalid OTP '.$phone);
             return 0;
         } elseif ($checkotp && $now->isAfter($checkotp->expire_at)) {
-            activity()->event('authentication')->log('Trying To Verify OTP Expired OTP '.$phone)
+            activity()->event('authentication')->log('Trying To Verify OTP Expired OTP '.$phone);
          //   $this->logevent->log('Trying To Verify OTP Expired OTP '.$phone);
             return 0;
         } else {
