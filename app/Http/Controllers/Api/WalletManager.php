@@ -20,7 +20,7 @@ class WalletManager extends Controller
    public function get_all_transaction(Request $request)
    {
     $record = UserTransaction::where('user_id', $request->user()->id)->orderBy('created_at', 'desc')->paginate(10);
-   // $record = Arr::except($record,['links']);
+   
     return response()->json([
         'status' => true,
         'data' => $record,

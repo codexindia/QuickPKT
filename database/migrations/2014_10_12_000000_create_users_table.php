@@ -18,10 +18,11 @@ return new class extends Migration
          
             $table->string('mobile_number')->unique();
             $table->string('email')->nullable()->unique();
-
-          
             $table->double('available_balance', 20.2)->default(0.00);
 
+            
+            $table->string('profile_pic')->nullable();
+           
             $table->rememberToken();
             $table->timestamps();
         });
