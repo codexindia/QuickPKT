@@ -45,9 +45,7 @@ class UserManager extends Controller
             'last_name' => $request->last_name,
         ];
         if ($request->has('email')) {
-            $updated_filed = [
-                'email' => $request->email
-            ];
+            $updated_filed['email'] = $request->email;
         }
         User::find($this->user_id)->update($updated_filed);
         return response()->json([

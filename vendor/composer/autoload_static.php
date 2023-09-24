@@ -38,6 +38,7 @@ class ComposerStaticInit63d746fb652158c2f309b190c135e52a
         'ec07570ca5a812141189b1fa81503674' => __DIR__ . '/..' . '/phpunit/phpunit/src/Framework/Assert/Functions.php',
         '72b1e3f4a2af9b30b3f137b3ec2057fc' => __DIR__ . '/..' . '/spatie/laravel-activitylog/src/helpers.php',
         '320163ac6b93aebe3dc25b60a0533d56' => __DIR__ . '/..' . '/spatie/laravel-ignition/src/helpers.php',
+        '559dba61bcaafa74db6aa5e7e8759117' => __DIR__ . '/../..' . '/app/Http/Helpers.php',
     );
 
     public static $prefixLengthsPsr4 = array (
@@ -538,6 +539,7 @@ class ComposerStaticInit63d746fb652158c2f309b190c135e52a
         'App\\Exceptions\\Handler' => __DIR__ . '/../..' . '/app/Exceptions/Handler.php',
         'App\\Http\\Controllers\\Api\\AuthManager' => __DIR__ . '/../..' . '/app/Http/Controllers/Api/AuthManager.php',
         'App\\Http\\Controllers\\Api\\UserManager' => __DIR__ . '/../..' . '/app/Http/Controllers/Api/UserManager.php',
+        'App\\Http\\Controllers\\Api\\WalletManager' => __DIR__ . '/../..' . '/app/Http/Controllers/Api/WalletManager.php',
         'App\\Http\\Controllers\\Controller' => __DIR__ . '/../..' . '/app/Http/Controllers/Controller.php',
         'App\\Http\\Kernel' => __DIR__ . '/../..' . '/app/Http/Kernel.php',
         'App\\Http\\Middleware\\Authenticate' => __DIR__ . '/../..' . '/app/Http/Middleware/Authenticate.php',
@@ -551,6 +553,7 @@ class ComposerStaticInit63d746fb652158c2f309b190c135e52a
         'App\\Http\\Middleware\\ValidateSignature' => __DIR__ . '/../..' . '/app/Http/Middleware/ValidateSignature.php',
         'App\\Http\\Middleware\\VerifyCsrfToken' => __DIR__ . '/../..' . '/app/Http/Middleware/VerifyCsrfToken.php',
         'App\\Models\\User' => __DIR__ . '/../..' . '/app/Models/User.php',
+        'App\\Models\\UserTransaction' => __DIR__ . '/../..' . '/app/Models/UserTransaction.php',
         'App\\Models\\VerficationCodes' => __DIR__ . '/../..' . '/app/Models/VerficationCodes.php',
         'App\\Providers\\AppServiceProvider' => __DIR__ . '/../..' . '/app/Providers/AppServiceProvider.php',
         'App\\Providers\\AuthServiceProvider' => __DIR__ . '/../..' . '/app/Providers/AuthServiceProvider.php',

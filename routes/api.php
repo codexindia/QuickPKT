@@ -26,7 +26,11 @@ Route::controller('AuthManager')->middleware('throttle:api')->prefix('auth')->gr
 Route::middleware('auth:sanctum')->group(function () {
     Route::controller('UserManager')->prefix('user')->group(function () {
         Route::post('/get_current_user', 'get_current_user');
-        Route::post('/update_user', 'update_user');
-       
+        Route::post('/update_user', 'update_user'); 
+    });
+    Route::controller('WalletManager')->prefix('wallet')->group(function () {
+        Route::post('/get_user_balance', 'get_user_balance');
+        Route::post('/get_all_transaction', 'get_all_transaction'); 
+        Route::post('/create_fund_value', 'create_fund_value'); 
     });
 });

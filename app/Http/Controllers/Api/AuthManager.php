@@ -27,7 +27,7 @@ class AuthManager extends Controller
             if ($checkphone) {
                 $checkphone->tokens()->delete();
                 $token = $checkphone->createToken('auth_token')->plainTextToken;
-                activity()->event('authentication')->log('Token Generated Successfully (Login) '.$request->phone.' IP: '.$request->ip());
+                activity()->causedBy($checkphone)->event('authentication')->log('Token Generated Successfully (Login) '.$request->phone.' IP: '.$request->ip());
                 return response()->json([
                     'status' => true,
                     'message' => 'OTP Verified  Successfully (Login)',
