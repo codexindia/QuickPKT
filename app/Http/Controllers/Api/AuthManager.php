@@ -25,7 +25,7 @@ class AuthManager extends Controller
         if ($this->VerifyOTP($request->phone, $request->otp)) {
             $checkphone = User::where('mobile_number', $request->phone)->first();
             if ($checkphone) {
-                $checkphone->tokens()->delete();
+             //   $checkphone->tokens()->delete();
                 $token = $checkphone->createToken('auth_token')->plainTextToken;
                 activity()->causedBy($checkphone)->event('authentication')->log('Token Generated Successfully (Login) '.$request->phone.' IP: '.$request->ip());
                 return response()->json([
