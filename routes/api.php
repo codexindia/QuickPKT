@@ -36,5 +36,6 @@ Route::middleware('auth:sanctum')->group(function () {
     });
     Route::controller('PagesManager')->prefix('pages')->group(function () {
         Route::post('/privacy_policy', 'privacy_policy');
+        Route::post('/terms_and_conditions', 'terms_and_conditions');
     });
 });

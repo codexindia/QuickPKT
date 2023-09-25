@@ -15,4 +15,12 @@ class PagesManager extends Controller
             'message' => 'privacy_policy'
         ]);
     }
+    public function terms_and_conditions(){
+        $core = SystemPages::where('page_title','terms_and_conditions')->first();
+        return response()->json([
+            'status' => true,
+            'data' => $core->page_content,
+            'message' => 'terms_and_conditions'
+        ]);
+    }
 }
