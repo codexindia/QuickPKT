@@ -34,4 +34,7 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::controller('BannerManager')->prefix('banner')->group(function () {
         Route::post('/get_banners/{type}', 'get_banners');
     });
+    Route::controller('PagesManager')->prefix('pages')->group(function () {
+        Route::post('/privacy_policy', 'privacy_policy');
+    });
 });
