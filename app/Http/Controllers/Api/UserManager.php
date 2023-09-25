@@ -41,6 +41,11 @@ class UserManager extends Controller
             'last_name' => 'required',
             'email' => 'email',
             'profile_pic' => 'image|mimes:jpg,png,jpeg,gif,svg|max:2048',
+        ],[
+            'first_name.required' => 'Please Enter Your first name',
+            'last_name.required' => 'Please Enter Your Last name',
+            'email.email' => 'Please Enter Valid Email',
+            'profile_pic.image' => 'Upload your Valid profile picture'
         ]);
         $updated_filed = [
             'first_name' => $request->first_name,

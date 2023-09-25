@@ -14,9 +14,7 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::middleware('auth:sanctum')->get('/users', function (Request $request) {
-    return $request->user();
-});
+
 Route::controller('AuthManager')->middleware('throttle:api')->prefix('auth')->group(function () {
     Route::post('/login_or_signup', 'login_or_signup');
     Route::post('send_otp', 'SendOTP');
@@ -32,5 +30,8 @@ Route::middleware('auth:sanctum')->group(function () {
         Route::post('/get_user_balance', 'get_user_balance');
         Route::post('/get_all_transaction', 'get_all_transaction'); 
         Route::post('/create_fund_value', 'create_fund_value'); 
+    });
+    Route::controller('BannerManager')->prefix('banner')->group(function () {
+        Route::post('/get_banners/{type}', 'get_banners');
     });
 });

@@ -38,7 +38,6 @@ class AuthManager extends Controller
                     'mobile_number' => $request->phone,
                 ]);
 
-
                 $token = $newuser->createToken('auth_token')->plainTextToken;
                 activity()->event('authentication')->log('New Token Created (new user): ' . $request->phone.' IP: '.$request->ip());
                 return response()->json([
