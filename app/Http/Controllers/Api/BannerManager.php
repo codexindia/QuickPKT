@@ -11,14 +11,14 @@ class BannerManager extends Controller
     public function get_banners(Request $request)
     {
         if ($request->type == 'main') {
-            $all = AppBanners::where('type', 'main')->orderBy('id','desc')->get();
+            $all = AppBanners::where('type', 'main')->orderBy('id', 'desc')->get();
         } elseif ($request->type == 'featured') {
-            $all = AppBanners::where('type', 'featured')->orderBy('id','desc')->get();
+            $all = AppBanners::where('type', 'featured')->orderBy('id', 'desc')->get();
         } elseif ($request->type == 'spotlight') {
-            $all = AppBanners::where('type', 'spotlight')->orderBy('id','desc')->get();
+            $all = AppBanners::where('type', 'spotlight')->orderBy('id', 'desc')->get();
         }
-        if(isset($all))
-        {
+       
+        if (isset($all)) {
             return response()->json([
                 'status' => true,
                 'data' => $all,
