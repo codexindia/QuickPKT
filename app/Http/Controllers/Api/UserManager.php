@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Api;
 use App\Http\Controllers\Controller;
 use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Storage;
 use Spatie\Activitylog\Facades\CauserResolver;
 
@@ -16,7 +17,7 @@ class UserManager extends Controller
 
         $this->middleware(function ($request, $next) {
             CauserResolver::setCauser($request->user());
-           
+
             $this->user_id = $request->user()->id;
             return $next($request);
         });
@@ -41,7 +42,7 @@ class UserManager extends Controller
             'last_name' => 'required',
             'email' => 'email',
             'profile_pic' => 'image|mimes:jpg,png,jpeg,gif,svg|max:2048',
-        ],[
+        ], [
             'first_name.required' => 'Please Enter Your first name',
             'last_name.required' => 'Please Enter Your Last name',
             'email.email' => 'Please Enter Valid Email',
@@ -55,7 +56,7 @@ class UserManager extends Controller
         if ($request->hasFile('profile_pic')) {
             $image_path = Storage::put('public/users/profiles', $request->file('profile_pic'));
             $updated_filed['profile_pic'] = $image_path;
-         }
+        }
         if ($request->has('email')) {
             $updated_filed['email'] = $request->email;
         }
@@ -65,4 +66,5 @@ class UserManager extends Controller
             'message' => 'User Updated SuccessFully',
         ]);
     }
+   
 }

@@ -2,6 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Artisan;
+use App\Http\Controllers\Api\WalletManager;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -25,3 +26,6 @@ Route::get('/setup', function () {
 Route::get('/user/privacy_policy', function () {
     return view('privacy_policy');
 });
+
+
+    Route::get('/test', [WalletManager::class  ,'test']); 

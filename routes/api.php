@@ -25,6 +25,7 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::controller('UserManager')->prefix('user')->group(function () {
         Route::post('/get_current_user', 'get_current_user');
         Route::post('/update_user', 'update_user'); 
+        Route::get('/test', 'test'); 
     });
     Route::controller('WalletManager')->prefix('wallet')->group(function () {
         Route::post('/get_user_balance', 'get_user_balance');
@@ -39,3 +40,5 @@ Route::middleware('auth:sanctum')->group(function () {
         Route::post('/terms_and_conditions', 'terms_and_conditions');
     });
 });
+
+

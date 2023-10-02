@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\UserTransaction;
 use Illuminate\Support\Arr;
+use Illuminate\Support\Facades\Http;
 class WalletManager extends Controller
 {
    public function get_user_balance(Request $request)
@@ -27,4 +28,5 @@ class WalletManager extends Controller
         'message' => 'Wallet Transaction Loaded Successfully',
     ]);
    }
+  
 }
