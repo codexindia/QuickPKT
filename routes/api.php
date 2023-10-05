@@ -2,7 +2,7 @@
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
-
+use App\Http\Controllers\Api\Recharge\MobileRecharge;
 /*
 |--------------------------------------------------------------------------
 | API Routes
@@ -43,5 +43,9 @@ Route::middleware('auth:sanctum')->group(function () {
     //for recharge section 
     Route::controller('OperatorManager')->prefix('operators')->group(function () {
         Route::post('/get_operators/{type}', 'get_operators');
+    });
+
+    Route::controller(MobileRecharge::class)->prefix('mobile_recharge')->group(function () {
+        Route::post('/get_offers/{operator_short_code}', 'get_offers');
     });
 });

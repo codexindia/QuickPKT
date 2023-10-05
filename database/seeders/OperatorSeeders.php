@@ -14,7 +14,7 @@ class OperatorSeeders extends Seeder
     public function run(): void
     {
         OperatorList::create([
-            'name' => 'VI',
+            'name' => 'V!',
             'short_code' => 'vi',
             'type' => 'mobile_recharge',
             'commission_type' => 'percentage',
