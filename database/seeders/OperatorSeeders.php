@@ -30,8 +30,16 @@ class OperatorSeeders extends Seeder
             'status' => 'active',
         ]);
         OperatorList::create([
-            'name' => 'BSNL',
-            'short_code' => 'bsnl',
+            'name' => 'BSNL Topup',
+            'short_code' => 'bsnl_topup',
+            'type' => 'mobile_recharge',
+            'commission_type' => 'percentage',
+            'commission_value' => '2',
+            'status' => 'active',
+        ]);
+        OperatorList::create([
+            'name' => 'BSNL Special',
+            'short_code' => 'bsnl_special',
             'type' => 'mobile_recharge',
             'commission_type' => 'percentage',
             'commission_value' => '2',
