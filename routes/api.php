@@ -46,6 +46,6 @@ Route::middleware('auth:sanctum')->group(function () {
     });
 
     Route::controller(MobileRecharge::class)->prefix('mobile_recharge')->group(function () {
-        Route::post('/get_offers/{operator_short_code}', 'get_offers');
+        Route::post('/get_plans/{operator_short_code}', 'get_plans');
     });
 });
