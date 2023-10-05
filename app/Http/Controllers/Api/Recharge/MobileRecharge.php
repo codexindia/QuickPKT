@@ -21,7 +21,7 @@ class MobileRecharge extends Controller
         $opcode = $opcode->where('short_code', $request->operator_short_code)->first();
         if ($opcode != null) {
             $result = Http::get('https://api.oxnpay.in/Recharge/onewayy.php?key=' . env('OXNPAY') . '&op=' . $opcode['opcode']);
-           return $result;
+         
             if ($result) {
                 $result = collect(json_decode($result));
                 $result = $result->map(function ($tag) {
