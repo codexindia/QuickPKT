@@ -22,7 +22,9 @@ Route::get('/setup', function () {
     Artisan::call('migrate');
     Artisan::call('db:seed');
 });
-
+Route::get('/setup/m', function () {
+    Artisan::call('migrate');
+});
 Route::get('/user/privacy_policy', function () {
     return view('privacy_policy');
 });
