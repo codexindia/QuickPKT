@@ -24,6 +24,7 @@ class MobileRecharge extends Controller
         
             if ($result) {
                 $result = collect(json_decode($result));
+                
                 $result = $result->map(function ($tag) {
                     return [
                         'amount' => $tag->Amount,

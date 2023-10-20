@@ -39,6 +39,10 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::controller('BannerManager')->prefix('banner')->group(function () {
         Route::post('/get_banners/{type}', 'get_banners');
     });
+    Route::controller('AlertManager')->prefix('alert')->group(function () {
+        Route::post('/get_notification', 'get_notification');
+        Route::post('/mark_read', 'mark_read');
+    });
 
     //for recharge section 
     Route::controller('OperatorManager')->prefix('operators')->group(function () {

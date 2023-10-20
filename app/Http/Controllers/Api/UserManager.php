@@ -4,8 +4,10 @@ namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
 use App\Models\User;
+use App\Notifications\UserAlert;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Http;
+
+use Illuminate\Support\Facades\Notification;
 use Illuminate\Support\Facades\Storage;
 use Spatie\Activitylog\Facades\CauserResolver;
 
@@ -60,7 +62,11 @@ class UserManager extends Controller
         if ($request->has('email')) {
             $updated_filed['email'] = $request->email;
         }
-        User::find($this->user_id)->update($updated_filed);
+        $user = User::find($this->user_id);
+        $user->update($updated_filed);
+        $param['title'] = 'lorem ipsum dolor sit amet, consectet';
+        $param['subtitle'] = 'lorem ipsum dolor sit amet, consectet lorem ipsum dolor sit amet, consectet lorem ipsum dolor sit amet, consectet';
+        Notification::send($user, new UserAlert($param));
         return response()->json([
             'status' => true,
             'message' => 'User Updated SuccessFully',
